@@ -68,16 +68,18 @@ def Bron_kerbosch(conjuntoR, conjuntoP, conjuntoX):# o P recebe todos os objetos
 def calcula_coeficiente(Grafo):
     coeficiente_aglomeracao = 0
     for node in Grafo: # Comeca por Brasil (tipo List)
-        possiveis_triangulos = (len(node.lista)*(len(node.lista) - 1))/2
-        triangulos_reais = 0
-        for vizinho in node.lista: # Primeiro vizinho sera Italia (string)
-            for busca in Grafo: # Busca no grafo a lista da Italia
-                if(busca.pais == vizinho): # Quando acha
-                    for sub_vizinho in busca.lista: # Busca nessa lista
-                        if (sub_vizinho != node.pais) and (sub_vizinho in node.lista): # Verifica se o vertice não eh o original e se ele esta conectado ao original
-                            triangulos_reais += 1
-        if possiveis_triangulos != 0: # Evita divisao por 0 quando nao ha a possibilidade de triangulo
-            coeficiente_aglomeracao += triangulos_reais/possiveis_triangulos
+        print(node.pais)
+        if len(node.lista) > 1:
+            possiveis_triangulos = (len(node.lista)*(len(node.lista) - 1))/2
+            triangulos_reais = 0
+            for vizinho in node.lista: # Primeiro vizinho sera Italia (string)
+                for busca in Grafo: # Busca no grafo a Italia
+                    if(busca.pais == vizinho): # Quando acha
+                        for sub_vizinho in busca.lista: # Busca na lista da Italia
+                            if (sub_vizinho != node.pais) and (sub_vizinho in node.lista): # Verifica se o vertice não eh o original e se ele esta conectado ao original
+                                triangulos_reais += 1
+            if possiveis_triangulos != 0: # Evita divisao por 0 quando nao ha a possibilidade de triangulo
+                coeficiente_aglomeracao += (triangulos_reais)/((len(node.lista)) * (len(node.lista) - 1))
     return coeficiente_aglomeracao/len(Grafo)
 
 tamanho_clique_maximo = 0 # Usado como variavel global para encontrar o maximo
