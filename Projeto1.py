@@ -36,13 +36,18 @@ def calcula_coeficiente(Grafo):
     coeficiente_aglomeracao = 0
     for node in Grafo: # Brasil (lista)
         possiveis_triangulos = (len(node.lista)*(len(node.lista) - 1))/2
+        print(node.pais)
+        print("possiveis: " + str(possiveis_triangulos))
         triangulos_reais = 0
         for vizinho in node.lista: # Italia (string)
             for busca in Grafo: # Busca no grafo a lista da Italia
                 if(busca.pais == vizinho): # Quando acha
-                    if (possivel != node) and (possivel in node.lista):
-                        triangulos_reais += 1
-        coeficiente_aglomeracao += triangulos_reais/possiveis_triangulos
+                    for sub_vizinho in busca.lista:
+                        if (sub_vizinho != node.pais) and (sub_vizinho in node.lista):
+                            triangulos_reais += 1
+        print("reais: " + str(triangulos_reais))
+        if possiveis_triangulos != 0:
+            coeficiente_aglomeracao += triangulos_reais/possiveis_triangulos
     return coeficiente_aglomeracao/len(Grafo)
 
 
@@ -50,6 +55,5 @@ if __name__ == '__main__':
     Grafo = prepara_grafo()
     for node in Grafo:
         node.print_lista()
-    #print(calcula_coeficiente(Grafo))
-    print(Grafo[0].lista)
+    print(calcula_coeficiente(Grafo))
 
